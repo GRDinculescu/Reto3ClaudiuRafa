@@ -1,3 +1,3 @@
 # Reto 3
 ## De Claudiu y Rafa
-### Rafa crea el Repo
+1. Rafa crea el Repo
