@@ -36,6 +36,7 @@ public class PedidoDao {
 	
 	/**
 	 * Te devuelve el pedido con dicho ID
+	 * @param id El id que se buscara
 	 * @return El pedido que tenga ese ID
 	 */
 	public static Pedido mostrarPedidos(int id) {
@@ -81,5 +82,27 @@ public class PedidoDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Te devuelve los pedidos con el filtro añadido
+	 * @param filter El filtro que se añadira a la sentencia SQL (Despues de "SELECT * FROM Pedidos ")
+	 * @return El pedido que tenga ese ID
+	 */
+	public static ArrayList<Pedido> mostrarPedidosFilter(String filter) {
+		ArrayList<Pedido> listaPedidos;
+
+		listaPedidos = new ArrayList<Pedido>();
+		try (Connection con = Conexion.abreconexion()){
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Pedidos "+filter);
+
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				listaPedidos.add(new Pedido(rs.getInt("idPedido"), ClienteDao.mostrarClientes(rs.getInt("idCliente")), rs.getDouble("precioTotal"), rs.getString("direccionEnvio"), rs.getDate("fecha")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaPedidos;
 	}
 }
