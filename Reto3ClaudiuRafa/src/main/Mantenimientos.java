@@ -48,6 +48,39 @@ public class Mantenimientos {
     }
 
     private static void gestionClientes(Scanner sn){
+        String menu = """
+                Elige opcion:
+                1. Alta de nuevo cliente
+                2. Busqueda por codigo
+                0. Salir""";
+        int op;
+
+        while (true){
+            op = Funciones.dimeEntero(menu, sn);
+
+            if (op == 0){
+                return;
+            }
+
+            switch (op){
+                case 1 -> {
+                    System.out.println("=== Alta de nuevo cliente ===");
+                    altaCliente(sn);
+                }
+                case 2 -> {
+                    System.out.println("=== Busqueda por codigo ===");
+                    busquedaCodigo(sn);
+                }
+                default -> System.out.println("--- Opcion invalida ---");
+            }
+        }
+    }
+
+    private static void altaCliente(Scanner sn){
+
+    }
+
+    private static void busquedaCodigo(Scanner sn){
 
     }
 }
