@@ -57,7 +57,7 @@ public class PedidoProductoDao {
 	
 	/**
 	 * Añade un pedido de productos a la BD
-	 * @param Pedido El pedido de productos a añadir
+	 * @param pedidoProducto El pedido de productos a añadir
 	 */
 	public static void insertarPedidoProducto(PedidoProducto pedidoProducto) {
 		

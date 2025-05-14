@@ -59,7 +59,7 @@ public class PedidoDao {
 	
 	/**
 	 * Añade una pedido a la BD
-	 * @param Pedido El pedido a añadir
+	 * @param pedido El pedido a añadir
 	 */
 	public static void insertarPedido(Pedido pedido) {
 		

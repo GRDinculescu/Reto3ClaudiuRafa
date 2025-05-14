@@ -62,22 +62,22 @@ public class CategoriaDao {
 	
 	/**
 	 * Añade una categoria a la BD
-	 * @param Categoria La categoria a añadir
+	 * @param categoria La categoria a añadir
 	 */
-	public static void insertarCategoria(Categoria Categoria) {
+	public static void insertarCategoria(Categoria categoria) {
 		
 		try (Connection con = Conexion.abreconexion()){
 		
 			PreparedStatement stmt = con.prepareStatement("INSERT INTO Categorias (nombre) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
 			
-			stmt.setString(1, Categoria.getNombre());
+			stmt.setString(1, categoria.getNombre());
 			
 			stmt.executeUpdate();
 			
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
 				int id = rs.getInt(1);
-				Categoria.setId(id);
+				categoria.setId(id);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

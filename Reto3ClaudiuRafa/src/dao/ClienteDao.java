@@ -59,8 +59,8 @@ public class ClienteDao {
 	}
 	
 	/**
-	 * Añade una cliente a la BD
-	 * @param Cliente El cliente a añadir
+	 * Añade un cliente a la BD
+	 * @param cliente El cliente a añadir
 	 */
 	public static void insertarCliente(Cliente Cliente) {
 		
@@ -85,8 +85,8 @@ public class ClienteDao {
 	}
 	
 	/**
-	 * Añade una cliente a la BD
-	 * @param Cliente El cliente a añadir
+	 * Actualiza un cliente de la BD
+	 * @param cliente El cliente a añadir
 	 */
 	public static void actualizarCliente(Cliente Cliente) {
 		try (Connection con = Conexion.abreconexion()){
