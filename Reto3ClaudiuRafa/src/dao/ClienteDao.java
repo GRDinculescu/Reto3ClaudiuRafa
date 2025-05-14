@@ -85,6 +85,27 @@ public class ClienteDao {
 	}
 	
 	/**
+	 * Añade una cliente a la BD
+	 * @param Cliente El cliente a añadir
+	 */
+	public static void actualizarCliente(Cliente Cliente, int id) {
+		try (Connection con = Conexion.abreconexion()){
+		
+			PreparedStatement stmt = con.prepareStatement("UPDATE Clientes SET (nombre = ?, direccion = ?, codigo = ?) WHERE idcliente = ?");
+			
+			stmt.setString(1, Cliente.getNombre());
+			stmt.setString(2, Cliente.getDireccion());
+			stmt.setInt(3, Cliente.getCodigo());
+			stmt.setInt(4, id);
+
+			stmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Te devuelve los clientes con el filtro añadido
 	 * @param filter El filtro que se añadira a la sentencia SQL (Despues de "SELECT * FROM Cliente ")
 	 * @return Los clientes que coincidan con ese filtro
