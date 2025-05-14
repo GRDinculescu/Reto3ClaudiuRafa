@@ -84,7 +84,7 @@ public class PedidoProductoDao {
 	
 	/**
 	 * Te devuelve los pedidos con los productos con el filtro añadido
-	 * @param filter El filtro que se añadira a la sentencia SQL (Despues de "SELECT * FROM Pedidos ")
+	 * @param filter El filtro que se añadira a la sentencia SQL (Despues de "SELECT * FROM PedidoProducto ")
 	 * @return Los pedidos que coincidan con ese filtro
 	 */
 	public static List<PedidoProducto> mostrarPedidoProductos(String filter) {

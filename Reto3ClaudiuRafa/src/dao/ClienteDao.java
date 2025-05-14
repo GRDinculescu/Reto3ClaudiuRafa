@@ -86,7 +86,7 @@ public class ClienteDao {
 	
 	/**
 	 * Te devuelve los clientes con el filtro añadido
-	 * @param filter El filtro que se añadira a la sentencia SQL (Despues de "SELECT * FROM Pedidos ")
+	 * @param filter El filtro que se añadira a la sentencia SQL (Despues de "SELECT * FROM Cliente ")
 	 * @return Los clientes que coincidan con ese filtro
 	 */
 	public static List<Cliente> mostrarClientes(String filter) {

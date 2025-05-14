@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelos.Categoria;
+import modelos.Producto;
 import util.Conexion;
 
 /**
@@ -81,6 +82,29 @@ public class CategoriaDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	/**
+	 * Te devuelve las categorias con el filtro añadido
+	 * @param filter El filtro que se añadira a la sentencia SQL (Despues de "SELECT * FROM Categorias ")
+	 * @return Las categorias que coincidan con ese filtro
+	 */
+	public static List<Categoria> mostrarCategorias(String filter) {
+		ArrayList<Categoria> listaCategorias;
+
+		listaCategorias = new ArrayList<Categoria>();
+		try (Connection con = Conexion.abreconexion()){
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Categorias "+filter);
+
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				listaCategorias.add(new Categoria(rs.getInt("idCategoria"), rs.getString("nombre")));
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaCategorias;
 	}
 	
 
