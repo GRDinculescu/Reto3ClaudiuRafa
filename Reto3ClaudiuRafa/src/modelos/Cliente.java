@@ -6,10 +6,10 @@ package modelos;
  * @since 12/05/2025
  */
 public class Cliente {
-    int id;
-    String nombre;
-    String direccion;
-    int codigo;
+    private int id;
+    private String nombre;
+    private String direccion;
+    private int codigo;
 
     /**
      * Constructor completo
