@@ -88,7 +88,7 @@ public class ClienteDao {
 	 * Añade una cliente a la BD
 	 * @param Cliente El cliente a añadir
 	 */
-	public static void actualizarCliente(Cliente Cliente, int id) {
+	public static void actualizarCliente(Cliente Cliente) {
 		try (Connection con = Conexion.abreconexion()){
 		
 			PreparedStatement stmt = con.prepareStatement("UPDATE Clientes SET (nombre = ?, direccion = ?, codigo = ?) WHERE idcliente = ?");
@@ -96,7 +96,7 @@ public class ClienteDao {
 			stmt.setString(1, Cliente.getNombre());
 			stmt.setString(2, Cliente.getDireccion());
 			stmt.setInt(3, Cliente.getCodigo());
-			stmt.setInt(4, id);
+			stmt.setInt(4, Cliente.getId());
 
 			stmt.executeUpdate();
 
