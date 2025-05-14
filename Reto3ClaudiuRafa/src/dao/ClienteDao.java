@@ -36,6 +36,7 @@ public class ClienteDao {
 	
 	/**
 	 * Te devuelve el cliente con dicho ID
+	 * @param id El id que se buscara
 	 * @return El cliente que tenga ese ID
 	 */
 	public static Cliente mostrarClientes(int id) {

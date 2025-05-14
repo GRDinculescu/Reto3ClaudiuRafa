@@ -33,6 +33,7 @@ public class ProductoDao {
 	
 	/**
 	 * Te devuelve el producto con dicho ID
+	 * @param id El id que se buscara
 	 * @return El producto que tenga ese ID
 	 */
 	public static Producto mostrarProductos(int id) {

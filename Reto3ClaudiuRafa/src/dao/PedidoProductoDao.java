@@ -33,6 +33,7 @@ public class PedidoProductoDao {
 	
 	/**
 	 * Te devuelve el pedido de productos con dicho ID
+	 * @param id El id que se buscara
 	 * @return El pedido de productos que tenga ese ID
 	 */
 	public static PedidoProducto mostrarPedidoProductos(int id) {

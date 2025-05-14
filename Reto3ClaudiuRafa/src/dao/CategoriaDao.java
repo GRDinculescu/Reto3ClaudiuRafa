@@ -37,6 +37,7 @@ public class CategoriaDao {
 	
 	/**
 	 * Te devuelve la categoria con dicho ID
+	 * @param id El id que se buscara
 	 * @return La categoria que tenga ese ID
 	 */
 	public static Categoria mostrarCategorias(int id) {
