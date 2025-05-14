@@ -94,7 +94,7 @@ public class ClienteDao {
 
 		listaClientes = new ArrayList<Cliente>();
 		try (Connection con = Conexion.abreconexion()){
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Pedidos "+filter);
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Clientes "+filter);
 
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
