@@ -89,7 +89,7 @@ public class PedidoDao {
 	 * @param filter El filtro que se añadira a la sentencia SQL (Despues de "SELECT * FROM Pedidos ")
 	 * @return El pedido que tenga ese ID
 	 */
-	public static ArrayList<Pedido> mostrarPedidosFilter(String filter) {
+	public static ArrayList<Pedido> mostrarPedidos(String filter) {
 		ArrayList<Pedido> listaPedidos;
 
 		listaPedidos = new ArrayList<Pedido>();
