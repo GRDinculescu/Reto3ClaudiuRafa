@@ -56,7 +56,7 @@ public class ProductoDao {
 	
 	/**
 	 * Añade una producto a la BD
-	 * @param Pedido El producto a añadir
+	 * @param Producto El producto a añadir
 	 */
 	public static void insertarProducto(Producto producto) {
 		

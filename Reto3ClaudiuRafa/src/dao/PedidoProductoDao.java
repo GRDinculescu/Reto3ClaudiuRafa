@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelos.Pedido;
 import modelos.PedidoProducto;
 import util.Conexion;
 
@@ -80,4 +81,27 @@ public class PedidoProductoDao {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Te devuelve los pedidos con los productos con el filtro añadido
+	 * @param filter El filtro que se añadira a la sentencia SQL (Despues de "SELECT * FROM Pedidos ")
+	 * @return Los pedidos que coincidan con ese filtro
+	 */
+	public static List<PedidoProducto> mostrarPedidoProductos(String filter) {
+		ArrayList<PedidoProducto> listaPedidoProductos;
+
+		listaPedidoProductos = new ArrayList<PedidoProducto>();
+		try (Connection con = Conexion.abreconexion()){
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Pedidos "+filter);
+
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				listaPedidoProductos.add(new PedidoProducto(rs.getInt("idPedidoProducto"), PedidoDao.mostrarPedidos(rs.getInt("idpedido")), ProductoDao.mostrarProductos(rs.getInt("idProducto")), rs.getInt("unidades"), rs.getDouble("precio")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaPedidoProductos;
+	}
+	
 }

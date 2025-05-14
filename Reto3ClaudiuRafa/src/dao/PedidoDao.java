@@ -87,7 +87,7 @@ public class PedidoDao {
 	/**
 	 * Te devuelve los pedidos con el filtro añadido
 	 * @param filter El filtro que se añadira a la sentencia SQL (Despues de "SELECT * FROM Pedidos ")
-	 * @return El pedido que tenga ese ID
+	 * @return Los pedidos que coincidan con ese filtro
 	 */
 	public static ArrayList<Pedido> mostrarPedidos(String filter) {
 		ArrayList<Pedido> listaPedidos;

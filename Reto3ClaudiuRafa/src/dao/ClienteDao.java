@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelos.Cliente;
+import modelos.PedidoProducto;
 import util.Conexion;
 
 /**
@@ -82,4 +83,27 @@ public class ClienteDao {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Te devuelve los clientes con el filtro añadido
+	 * @param filter El filtro que se añadira a la sentencia SQL (Despues de "SELECT * FROM Pedidos ")
+	 * @return Los clientes que coincidan con ese filtro
+	 */
+	public static List<Cliente> mostrarClientes(String filter) {
+		ArrayList<Cliente> listaClientes;
+
+		listaClientes = new ArrayList<Cliente>();
+		try (Connection con = Conexion.abreconexion()){
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Pedidos "+filter);
+
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				listaClientes.add(new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("direccion"), rs.getInt("codigo")));
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaClientes;
+	}
+	
 }
