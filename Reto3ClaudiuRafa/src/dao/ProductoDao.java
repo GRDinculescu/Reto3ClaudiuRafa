@@ -112,25 +112,15 @@ public class ProductoDao {
 	}
 	
 	/**
-	 * Actualiza una producto de la BD con un filtro
+	 * Actualiza un producto de la BD con un filtro
 	 * !ATENCION: No se aplica el filtro del ID, a si que hay que tener cuidado con eso
-	 * @param producto El producto a añadir
-	 * @param filter El filtro a añadir
+	 * @param filter El filtro a añadir (despues de: "UPDATE productos SET ")
 	 */
-	public static void actualizarProducto(Producto producto, String filter) {
+	public static void actualizarProducto(String filter) {
 		
 		try (Connection con = Conexion.abreconexion()){
 		
-			PreparedStatement stmt = con.prepareStatement("UPDATE productos SET (idcategoria = ?, nombre = ?, precio = ?, descripcion = ?, color = ?, talla = ?, stock = ?) "+filter);
-			
-			stmt.setInt(1, producto.getCategoria().getId());
-			stmt.setString(2, producto.getNombre());
-			stmt.setDouble(3, producto.getPrecio());
-			stmt.setString(4, producto.getDescripcion());
-			stmt.setString(5, producto.getColor());
-			stmt.setString(6, producto.getTalla());
-			stmt.setInt(7, producto.getStock());
-			stmt.setInt(8, producto.getId());
+			PreparedStatement stmt = con.prepareStatement("UPDATE productos SET "+filter);
 			
 			stmt.executeUpdate();
 			
