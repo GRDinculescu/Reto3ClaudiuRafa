@@ -65,17 +65,16 @@ public class Informes {
     private static void pedidosPorCliente(Scanner sn) {
         int codigo = Funciones.dimeEntero("Inserte codigo de cliente", sn);
 
-        String filter = "where codigo = " + codigo;
-        List<Pedido> pedidos = PedidoDao.mostrarPedidos(filter);
+        List<Pedido> pedidos = PedidoDao.mostrarPedidosPorCodigoCliente(codigo);
 
         if (!pedidos.isEmpty()){
             pedidos.forEach(System.out::println);
         } else {
-            System.out.println("No tiene pedidos");
+            System.out.println("El cliente no tiene pedidos");
         }
     }
 
     private static void productosMasVendidos(Scanner sn) {
-
+        //List<Producto>
     }
 }
