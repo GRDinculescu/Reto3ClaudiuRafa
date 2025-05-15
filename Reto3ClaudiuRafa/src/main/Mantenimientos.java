@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
+/**
+ * @author Giovanni
+ * @version 0.1
+ * @since 13/05/2025
+ */
 public class Mantenimientos {
     public static void menu(Scanner sn){
         String menu = """
@@ -25,9 +31,7 @@ public class Mantenimientos {
         while (true){
             op = Funciones.dimeEntero(menu, sn);
 
-            if (op == 0){
-                return;
-            }
+            if (op == 0) return;
 
             switch (op){
                 case 1 -> {
@@ -60,12 +64,12 @@ public class Mantenimientos {
 
         if (!categorias.isEmpty()) {
             Producto producto = new Producto();
-            producto.setNombre(Funciones.dimeString("Inserte color", sn));
-            producto.setPrecio(Funciones.dimeDouble("Inserte color", sn));
-            producto.setDescripcion(Funciones.dimeString("Inserte color", sn));
+            producto.setNombre(Funciones.dimeString("Inserte nombre", sn));
+            producto.setPrecio(Funciones.dimeDouble("Inserte precio", sn));
+            producto.setDescripcion(Funciones.dimeString("Inserte descripcion", sn));
             producto.setColor(Funciones.dimeString("Inserte color", sn));
-            producto.setTalla(Funciones.dimeString("Inserte color", sn));
-            producto.setStock(Funciones.dimeEntero("Inserte color", sn));
+            producto.setTalla(Funciones.dimeString("Inserte talla", sn));
+            producto.setStock(Funciones.dimeEntero("Inserte stock", sn));
 
             Categoria categoria = null;
 
@@ -123,9 +127,7 @@ public class Mantenimientos {
         // Obtenemos todos los clientes para obtener sus codigos
         List<Cliente> clientes = ClienteDao.mostrarClientes();
         List<Integer> codigos = new ArrayList<>();
-        for (Cliente c : clientes){
-            codigos.add(c.getCodigo());
-        }
+        for (Cliente c : clientes) codigos.add(c.getCodigo());
 
         cliente.setNombre(Funciones.dimeString("Inserte nombre", sn));
         cliente.setDireccion(Funciones.dimeString("Inserte direccion", sn));
@@ -141,6 +143,24 @@ public class Mantenimientos {
     }
 
     private static void busquedaCodigo(Scanner sn){
+        int codigo = Funciones.dimeEntero("Inserte codigo" ,sn);
+
+        String filtro = "where codigo = " + codigo + " limit 1";
+        List<Cliente> clientes = ClienteDao.mostrarClientes(filtro);
+
+        if (!clientes.isEmpty()){
+            Cliente cliente = clientes.getFirst();
+
+            System.out.println(cliente);
+
+            cliente.setNombre(Funciones.dimeString("Inserte nuevo nombre", sn));
+            cliente.setDireccion(Funciones.dimeString("Inserte nueva direccion", sn));
+            cliente.setCodigo(Funciones.dimeEntero("Inserte nuevo codigo", sn));
+
+            ClienteDao.actualizarCliente(cliente);
+        } else {
+            System.err.println("No hay clientes con ese codigo");
+        }
 
     }
 }

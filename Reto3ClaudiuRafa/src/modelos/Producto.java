@@ -6,14 +6,14 @@ package modelos;
  * @since 12/05/2025
  */
 public class Producto {
-    int id;
-    Categoria categoria;
-    String nombre;
-    double precio;
-    String descripcion;
-    String color;
-    String talla;
-    int stock;
+    private int id;
+    private Categoria categoria;
+    private String nombre;
+    private double precio;
+    private String descripcion;
+    private String color;
+    private String talla;
+    private int stock;
 
     /**
      * Constructor completo

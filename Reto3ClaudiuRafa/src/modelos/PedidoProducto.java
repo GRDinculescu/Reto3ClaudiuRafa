@@ -6,11 +6,11 @@ package modelos;
  * @since 12/05/2025
  */
 public class PedidoProducto {
-    int id;
-    Pedido pedido;
-    Producto producto;
-    int unidades;
-    double precio;
+    private int id;
+    private Pedido pedido;
+    private Producto producto;
+    private int unidades;
+    private double precio;
 
     /**
      * Constructor completo

@@ -8,11 +8,11 @@ import java.util.Date;
  * @since 12/05/2025
  */
 public class Pedido {
-    int id;
-    Cliente cliente;
-    double precioTotal;
-    String direccionEnvio;
-    Date fecha;
+    private int id;
+    private Cliente cliente;
+    private double precioTotal;
+    private String direccionEnvio;
+    private Date fecha;
 
     /**
      * Constructor completo

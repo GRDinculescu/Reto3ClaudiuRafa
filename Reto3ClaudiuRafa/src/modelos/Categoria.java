@@ -6,8 +6,8 @@ package modelos;
  * @since 12/05/2025
  */
 public class Categoria {
-    int id;
-    String nombre;
+    private int id;
+    private String nombre;
 
     /**
      * Constructor completo
