@@ -15,10 +15,14 @@ import java.util.Scanner;
 
 /**
  * @author Giovanni
- * @version 0.1
+ * @version 0.1.5
  * @since 13/05/2025
  */
 public class Mantenimientos {
+    /**
+     * Muestra el sub-menu de mantenimientos
+     * @param sn Scanner para preguntar las opciones y pasar a funciones
+     */
     public static void menu(Scanner sn){
         String menu = """
                 Elige opcion:
@@ -34,24 +38,20 @@ public class Mantenimientos {
             if (op == 0) return;
 
             switch (op){
-                case 1 -> {
-                    System.out.println("=== Gestion de categorías ===");
-                    gestionCategorias(sn);
-                }
-                case 2 -> {
-                    System.out.println("=== Gestion de productos ===");
-                    gestionProductos(sn);
-                }
-                case 3 -> {
-                    System.out.println("=== Gestion de clientes ===");
-                    gestionClientes(sn);
-                }
+                case 1 -> gestionCategorias(sn);
+                case 2 -> gestionProductos(sn);
+                case 3 -> gestionClientes(sn);
                 default -> System.out.println("--- Opcion invalida ---");
             }
         }
     }
 
+    /**
+     * Inserta una nueva categoria
+     * @param sn Scanner para preguntar los datos de la categoria
+     */
     private static void gestionCategorias(Scanner sn){
+        System.out.println("=== Gestion de categorías ===");
         Categoria categoria = new Categoria(
                 Funciones.dimeString(
                         "Inserte el nombre de nueva categoria: ",
@@ -60,7 +60,12 @@ public class Mantenimientos {
         System.out.println();
     }
 
+    /**
+     * Inserta un nuevo producto
+     * @param sn Scanner para preguntar los datos del producto
+     */
     private static void gestionProductos(Scanner sn){
+        System.out.println("=== Gestion de productos ===");
         List<Categoria> categorias = CategoriaDao.mostrarCategorias();
 
         if (!categorias.isEmpty()) {
@@ -95,7 +100,12 @@ public class Mantenimientos {
         }
     }
 
+    /**
+     * Muestra el sub-menu para gestionar los clientes
+     * @param sn Scanner para preguntar la opcion y pasar a funciones
+     */
     private static void gestionClientes(Scanner sn){
+        System.out.println("=== Gestion de clientes ===");
         String menu = """
                 Elige opcion:
                 1. Alta de nuevo cliente
@@ -109,20 +119,19 @@ public class Mantenimientos {
             if (op == 0) return;
 
             switch (op){
-                case 1 -> {
-                    System.out.println("=== Alta de nuevo cliente ===");
-                    altaCliente(sn);
-                }
-                case 2 -> {
-                    System.out.println("=== Busqueda por codigo ===");
-                    busquedaCodigo(sn);
-                }
+                case 1 -> altaCliente(sn);
+                case 2 -> busquedaCodigo(sn);
                 default -> System.out.println("--- Opcion invalida ---");
             }
         }
     }
 
+    /**
+     * Inserta un nuevo cliente
+     * @param sn Scanner para preguntar los datos
+     */
     private static void altaCliente(Scanner sn){
+        System.out.println("=== Alta de nuevo cliente ===");
         Cliente cliente = new Cliente();
 
         // Obtenemos todos los clientes para obtener sus codigos
@@ -133,7 +142,7 @@ public class Mantenimientos {
         cliente.setNombre(Funciones.dimeString("Inserte nombre", sn));
         cliente.setDireccion(Funciones.dimeString("Inserte direccion", sn));
 
-        // Validar codigo
+        // Validar que el codigo no esta en la tabla
         int codigo;
         do {
             codigo = Funciones.dimeEntero("Inserte codigo", sn);
@@ -143,7 +152,12 @@ public class Mantenimientos {
         ClienteDao.insertarCliente(cliente);
     }
 
+    /**
+     * Actualiza un cliente, lo busca por su CODIGO, no ID
+     * @param sn Scanner para insertar el codigo y los nuevos datos
+     */
     private static void busquedaCodigo(Scanner sn){
+        System.out.println("=== Busqueda por codigo ===");
         int codigo = Funciones.dimeEntero("Inserte codigo" ,sn);
 
         String filtro = "where codigo = " + codigo + " limit 1";
@@ -154,13 +168,19 @@ public class Mantenimientos {
 
             System.out.println(cliente);
 
-            cliente.setNombre(Funciones.dimeString("Inserte nuevo nombre", sn));
-            cliente.setDireccion(Funciones.dimeString("Inserte nueva direccion", sn));
-            cliente.setCodigo(Funciones.dimeEntero("Inserte nuevo codigo", sn));
+            cliente.setNombre(Funciones.dimeSiONo("¿Quieres cambiarle el nombre?", sn) ?
+                Funciones.dimeString("Inserta nombre", sn) : clientes.getFirst().getNombre());
+            cliente.setDireccion(Funciones.dimeSiONo("¿Quieres cambiar la direccion?", sn) ?
+                    Funciones.dimeString("Inserte nueva direccion", sn) : clientes.getFirst().getDireccion());
+            cliente.setCodigo(Funciones.dimeSiONo("¿Quieres cambiar el codigo?", sn) ?
+                    Funciones.dimeEntero("Inserte nuevo codigo", sn) : clientes.getFirst().getCodigo());
 
             ClienteDao.actualizarCliente(cliente);
         } else {
             System.err.println("No hay clientes con ese codigo");
+            if (Funciones.dimeSiONo("¿Quieres dar de alta al cliente?", sn)){
+                altaCliente(sn);
+            }
         }
 
     }
