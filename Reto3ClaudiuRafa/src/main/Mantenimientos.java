@@ -57,6 +57,7 @@ public class Mantenimientos {
                         "Inserte el nombre de nueva categoria: ",
                         sn));
         CategoriaDao.insertarCategoria(categoria);
+        System.out.println();
     }
 
     private static void gestionProductos(Scanner sn){

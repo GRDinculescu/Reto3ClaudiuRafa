@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelos.Categoria;
 import modelos.Cliente;
 import modelos.Producto;
 import util.Conexion;
@@ -24,7 +25,7 @@ public class ProductoDao {
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Productos");
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				listaProductos.add(new Producto(rs.getInt("idProducto"), CategoriaDao.mostrarCategorias(rs.getInt("idCategoria")), rs.getString("nombre"), rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"), rs.getString("talla"), rs.getInt("stok")));
+				listaProductos.add(new Producto(rs.getInt("idProducto"), CategoriaDao.mostrarCategorias(rs.getInt("idCategoria")), rs.getString("nombre"), rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"), rs.getString("talla"), rs.getInt("stock")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,7 +48,7 @@ public class ProductoDao {
 			
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				producto = new Producto(rs.getInt("idProducto"), CategoriaDao.mostrarCategorias(rs.getInt("idCategoria")), rs.getString("nombre"), rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"), rs.getString("talla"), rs.getInt("stok"));
+				producto = new Producto(rs.getInt("idProducto"), CategoriaDao.mostrarCategorias(rs.getInt("idCategoria")), rs.getString("nombre"), rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"), rs.getString("talla"), rs.getInt("stock"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -143,12 +144,57 @@ public class ProductoDao {
 
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				listaProductos.add(new Producto(rs.getInt("idProducto"), CategoriaDao.mostrarCategorias(rs.getInt("idCategoria")), rs.getString("nombre"), rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"), rs.getString("talla"), rs.getInt("stok")));
+				listaProductos.add(new Producto(rs.getInt("idProducto"), CategoriaDao.mostrarCategorias(rs.getInt("idCategoria")), rs.getString("nombre"), rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"), rs.getString("talla"), rs.getInt("stock")));
 				}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return listaProductos;
 	}
-	
+
+	public static List<Producto> mostrarProductosMasComprados(){
+		List<Producto> productos = new ArrayList<>();
+
+		try (Connection con = Conexion.abreconexion()) {
+			String query = "select p.idProducto, idCategoria, nombre, p.precio, descripcion, color, talla, stock from productos p\n" +
+					"inner join pedidoproducto pp on p.idProducto = pp.idProducto\n" +
+					"having (\n" +
+					"\tselect count(idProducto)\n" +
+					"    from pedidoproducto\n" +
+					"    group by idProducto\n" +
+					") =\n" +
+					"(\n" +
+					"\tselect count(idProducto)\n" +
+					"    from pedidoproducto\n" +
+					"    group by idProducto\n" +
+					"    order by idProducto desc\n" +
+					"    limit 1\n" +
+					");";
+
+			PreparedStatement stmt = con.prepareStatement(query);
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()){
+				Categoria c = new Categoria();
+				c.setId(rs.getInt("idCategoria"));
+
+				Producto p = new Producto(
+						rs.getInt("idProducto"),
+						c,
+						rs.getString("nombre"),
+						rs.getDouble("precio"),
+						rs.getString("descripcion"),
+						rs.getString("color"),
+						rs.getString("talla"),
+						rs.getInt("stock")
+				);
+
+				productos.add(p);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return productos;
+	}
 }

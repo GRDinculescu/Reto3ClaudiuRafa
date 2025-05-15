@@ -60,7 +60,7 @@ public class ClienteDao {
 	
 	/**
 	 * Añade un cliente a la BD
-	 * @param cliente El cliente a añadir
+	 * @param Cliente El cliente a añadir
 	 */
 	public static void insertarCliente(Cliente Cliente) {
 		
@@ -86,12 +86,12 @@ public class ClienteDao {
 	
 	/**
 	 * Actualiza un cliente de la BD
-	 * @param cliente El cliente a añadir
+	 * @param Cliente El cliente a añadir
 	 */
 	public static void actualizarCliente(Cliente Cliente) {
 		try (Connection con = Conexion.abreconexion()){
 		
-			PreparedStatement stmt = con.prepareStatement("UPDATE Clientes SET (nombre = ?, direccion = ?, codigo = ?) WHERE idcliente = ?");
+			PreparedStatement stmt = con.prepareStatement("UPDATE Clientes SET nombre = ?, direccion = ?, codigo = ? WHERE idcliente = ?");
 			
 			stmt.setString(1, Cliente.getNombre());
 			stmt.setString(2, Cliente.getDireccion());

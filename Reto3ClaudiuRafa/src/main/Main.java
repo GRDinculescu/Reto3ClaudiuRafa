@@ -32,9 +32,18 @@ public class Main {
 					System.out.println("\n=== Mantenimiento ===");
 					Mantenimientos.menu(sn);
 				}
-				case 2 -> System.out.println("\n=== Productos ===");
-				case 3 -> System.out.println("\n=== Pedidos ===");
-				case 4 -> System.out.println("\n=== Informes ===");
+				case 2 -> {
+					System.out.println("\n=== Productos ===");
+					//Catalogo.menu(sn);
+				}
+				case 3 -> {
+					System.out.println("\n=== Pedidos ===");
+					//Pedidos.menu(sn);
+				}
+				case 4 -> {
+					System.out.println("\n=== Informes ===");
+					Informes.menu(sn);
+				}
 				default -> System.out.println("\n--- Opcion invalida ---");
 			}
 		}

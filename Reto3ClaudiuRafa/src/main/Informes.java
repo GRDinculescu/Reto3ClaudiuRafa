@@ -1,9 +1,7 @@
 package main;
 
-import dao.ClienteDao;
 import dao.PedidoDao;
 import dao.ProductoDao;
-import modelos.Cliente;
 import modelos.Pedido;
 import modelos.Producto;
 import util.Funciones;
@@ -48,17 +46,23 @@ public class Informes {
         String filtro = "where stock < 5";
 
         // Se obtienen los productos y se muestran
-        List<Producto> productos = ProductoDao.mostrarProductos();
-        System.out.println("Productos con bajo stock");
-        productos.forEach(System.out::println);
+        List<Producto> productos = ProductoDao.mostrarProductos("where stock < 5");
 
-        // Se pide
-        int stock = Funciones.dimeEntero("Inserte cuanto stock se subira", sn);
-
-        if (stock > 0){
+        if (!productos.isEmpty()) {
+            System.out.println("Productos con bajo stock");
             for (Producto p : productos){
-                ProductoDao.actualizarProducto(p);
+                if (p.getStock() < 5) System.out.println(p);
             }
+
+            // Se pide
+            int stock = Funciones.dimeEntero("Inserte cuanto stock se subira", sn);
+
+            if (stock > 0) {
+                String filter = "stock = stock + " + stock + " where stock < 5";
+                ProductoDao.actualizarProducto(filter);
+            }
+        } else {
+            System.out.println("No hay productos con bajo stock\n");
         }
     }
 
@@ -70,11 +74,20 @@ public class Informes {
         if (!pedidos.isEmpty()){
             pedidos.forEach(System.out::println);
         } else {
-            System.out.println("El cliente no tiene pedidos");
+            System.out.println("El cliente no tiene pedidos\n");
         }
     }
 
     private static void productosMasVendidos(Scanner sn) {
-        //List<Producto>
+        List<Producto> productos = ProductoDao.mostrarProductosMasComprados();
+
+        if (!productos.isEmpty()){
+            System.out.println("Productos mas comprados");
+            productos.forEach(System.out::println);
+        } else {
+            System.out.println("Aun no se comprado ningún producto");
+        }
+
+        System.out.println();
     }
 }
