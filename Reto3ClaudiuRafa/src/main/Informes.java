@@ -9,7 +9,16 @@ import util.Funciones;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * @author Giovanni
+ * @version 0.1.5
+ * @since 14/0.5/2025
+ */
 public class Informes {
+    /**
+     * Muestra el sub-menu de Informes
+     * @param sn Scanner para pasar a otras funciones o preguntar la opcion
+     */
     public static void menu(Scanner sn){
         String menu = """
                 Elige opcion:
@@ -25,24 +34,20 @@ public class Informes {
             if (op == 0) return;
 
             switch (op){
-                case 1 -> {
-                    System.out.println("=== Bajo stock ===");
-                    bajoStock(sn);
-                }
-                case 2 -> {
-                    System.out.println("=== Pedidos por cliente ===");
-                    pedidosPorCliente(sn);
-                }
-                case 3 -> {
-                    System.out.println("=== Productos mas vendidos ===");
-                    productosMasVendidos(sn);
-                }
+                case 1 -> bajoStock(sn);
+                case 2 -> pedidosPorCliente(sn);
+                case 3 -> productosMasVendidos();
                 default -> System.out.println("--- Opcion invalida ---");
             }
         }
     }
 
+    /**
+     * Busca los productos con bajo stock
+     * @param sn Scanner para preguntar cuanto stock meter
+     */
     private static void bajoStock(Scanner sn) {
+        System.out.println("=== Bajo stock ===");
         String filtro = "where stock < 5";
 
         // Se obtienen los productos y se muestran
@@ -54,20 +59,31 @@ public class Informes {
                 if (p.getStock() < 5) System.out.println(p);
             }
 
-            // Se pide
-            int stock = Funciones.dimeEntero("Inserte cuanto stock se subira", sn);
+            if (Funciones.dimeSiONo("¿Quieres actualizar el stock?", sn)){
+                // Se pide
+                int stock = Funciones.dimeEntero("Inserte cuanto stock se subira", sn);
 
-            if (stock > 0) {
-                String filter = "stock = stock + " + stock + " where stock < 5";
-                ProductoDao.actualizarProducto(filter);
+                if (stock > 0) {
+                    String filter = "stock = stock + " + stock + " where stock < 5";
+                    ProductoDao.actualizarProducto(filter);
+                }
             }
         } else {
             System.out.println("No hay productos con bajo stock\n");
         }
     }
 
+    /**
+     * Muestra los pedidos de un cliente
+     * @param sn Scanner para pedir el CODIGO, no ID
+     */
     private static void pedidosPorCliente(Scanner sn) {
-        int codigo = Funciones.dimeEntero("Inserte codigo de cliente", sn);
+        System.out.println("=== Pedidos por cliente ===");
+        int codigo;
+
+        do {
+            codigo = Funciones.dimeEntero("Inserte codigo de cliente", sn);
+        } while (Funciones.dimeSiONo("¿Es ese el codigo?", sn));
 
         List<Pedido> pedidos = PedidoDao.mostrarPedidosPorCodigoCliente(codigo);
 
@@ -78,7 +94,11 @@ public class Informes {
         }
     }
 
-    private static void productosMasVendidos(Scanner sn) {
+    /**
+     * Muestra los productos mas vendidos, aun si hay empate
+     */
+    private static void productosMasVendidos() {
+        System.out.println("=== Productos mas vendidos ===");
         List<Producto> productos = ProductoDao.mostrarProductosMasComprados();
 
         if (!productos.isEmpty()){
