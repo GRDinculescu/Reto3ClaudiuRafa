@@ -173,4 +173,21 @@ public class Funciones {
 	{
 		return new java.sql.Date(fecha.getTime());
 	}
+	
+	public static boolean dimeSiONo(String texto, Scanner sc) {
+		do {
+			try {
+				System.out.println(texto+" (s/n)");
+				String s = sc.nextLine().toLowerCase();
+				if(s.length() != 1) throw new Exception();
+				
+				if(s.charAt(0) == 's') return true;
+				if(s.charAt(0) == 'n') return false;
+				
+				throw new Exception();
+			} catch (Exception e) {
+				System.out.println("Formato incorrecto");
+			}
+		} while (true);
+	}
 }
