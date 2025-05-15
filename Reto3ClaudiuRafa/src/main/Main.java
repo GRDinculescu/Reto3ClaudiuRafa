@@ -38,7 +38,7 @@ public class Main {
 				}
 				case 3 -> {
 					System.out.println("\n=== Pedidos ===");
-					//Pedidos.menu(sn);
+					Pedidos.menu(sn);
 				}
 				case 4 -> {
 					System.out.println("\n=== Informes ===");
