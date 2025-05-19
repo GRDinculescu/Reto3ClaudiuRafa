@@ -190,4 +190,14 @@ public class Funciones {
 			}
 		} while (true);
 	}
+
+	/**
+	 * Pide un string, y admite vacios
+	 * @param sn Scanner para el string
+	 * @return Devuelve el string que se inserto por consola
+	 */
+	public static String dimeStringVacio(String mensaje, Scanner sn){
+		System.out.println(mensaje);
+		return sn.nextLine();
+	}
 }

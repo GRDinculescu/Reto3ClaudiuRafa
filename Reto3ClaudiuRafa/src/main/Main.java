@@ -34,7 +34,7 @@ public class Main {
 				}
 				case 2 -> {
 					System.out.println("\n=== Productos ===");
-					//Catalogo.menu(sn);
+					Catalogo.menu(sn);
 				}
 				case 3 -> {
 					System.out.println("\n=== Pedidos ===");
