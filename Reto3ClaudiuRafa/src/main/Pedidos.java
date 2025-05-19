@@ -20,7 +20,7 @@ import util.Funciones;
 public class Pedidos {
     public static void menu(Scanner sn){
         String menu = """
-                Elige opcion:
+                \nElige opcion:
                 1. Crear pedido
                 2. Ver pedidos
                 0. Salir""";
@@ -53,8 +53,8 @@ public class Pedidos {
     	int code = -1;
     	List<Cliente> clientesTemp;
     	do {
-    		code = util.Funciones.dimeEntero("\nIntroduce tu codigo de cliente ([-1] para salir): ", sn);
-    		if(code == -1) {return;}
+    		code = util.Funciones.dimeEntero("\nIntroduce tu codigo de cliente ([0] para salir): ", sn);
+    		if(code == 0) {return;}
     		clientesTemp = ClienteDao.mostrarClientes("WHERE codigo = "+code);
 		} while (clientesTemp.isEmpty());
     	
@@ -106,6 +106,9 @@ public class Pedidos {
     			pedidos.add(pedido);
     			pedidoProductos.add(pedidoProducto);
     		}
+    		
+    		System.out.println("Presiona enter para continuar...");
+    		sn.nextLine();
     	}
     	
     	if(!pedidos.isEmpty()) {
@@ -124,6 +127,7 @@ public class Pedidos {
         	// Guradar pedido
         	
         	double precioTotal = 0;
+
         	productos.forEach(ProductoDao::actualizarProducto);
 
         	for (Pedido pedido : pedidos) {
