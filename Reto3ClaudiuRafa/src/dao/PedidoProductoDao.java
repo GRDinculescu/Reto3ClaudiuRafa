@@ -68,7 +68,7 @@ public class PedidoProductoDao {
 			stmt.setInt(1, pedidoProducto.getPedido().getId());
 			stmt.setInt(2, pedidoProducto.getProducto().getId());
 			stmt.setInt(3, pedidoProducto.getUnidades());
-			stmt.setDouble(3, pedidoProducto.getPrecio());
+			stmt.setDouble(4, pedidoProducto.getPrecio());
 
 			stmt.executeUpdate();
 			
@@ -92,7 +92,7 @@ public class PedidoProductoDao {
 
 		listaPedidoProductos = new ArrayList<PedidoProducto>();
 		try (Connection con = Conexion.abreconexion()){
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Pedidos "+filter);
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM pedidoProducto "+filter);
 
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
