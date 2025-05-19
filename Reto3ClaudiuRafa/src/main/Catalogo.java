@@ -1,19 +1,14 @@
 package main;
-/*
-2. Catálogo de productos: se mostrará el siguiente submenú
-2.1. Listar productos por categoría: mostraremos las categorías por consola,
-    mostrando id y nombre, y le pediremos al usuario que elija una.
-    Mostraremos los productos de esa categoría.
-2.2. Buscar productos: pediremos por consola un nombre, una talla y un color.
-    El usuario puede no introducir nada en alguna de esas preguntas (pulsa intro sin escribir nada).
-    Buscaremos los productos que cumplan el filtro introducido y los mostraremos por consola.
-    Ejemplo: si introduce sólo nombre, buscaremos los que tengan ese nombre contenido, no tiene que ser igual
-    (usamos % en el valor del argumento que pasamos, no en el ?). Si introducen sólo en talla y color,
-    los que tengan esa talla y ese color.
-*/
 
+import dao.CategoriaDao;
+import dao.ProductoDao;
+import modelos.Categoria;
+import modelos.Producto;
 import util.Funciones;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -47,11 +42,63 @@ public class Catalogo {
         }
     }
 
+    /**
+     * Muestra las categorias, deja al usuario que elija,
+     * y muestra los productos de esa categoria
+     * @param sn Scanner para preguntar el id de la categoria
+     */
     private static void listarProductosPorCategoria(Scanner sn) {
+        List<Categoria> categorias = CategoriaDao.mostrarCategorias();
+        List<Integer> ids = new ArrayList<>();
+        for (Categoria c : categorias) ids.add(c.getId());
 
+        System.out.println("Categorias:");
+        categorias.forEach(System.out::println);
+
+        int op;
+        do {
+            op = Funciones.dimeEntero("Inserte id categoria", sn);
+        } while (!ids.contains(op));
+
+        String filter = "where idCategoria = " + op;
+        List<Producto> productos = ProductoDao.mostrarProductos(filter);
+        System.out.println("Productos de esa categoria:");
+        productos.forEach(System.out::println);
     }
 
+    /**
+     * Pregunta caracteristicas de prodcutos, y muestra productos
+     * que cumplan esas caracteristicas. Lo hace de forma dinamica,
+     * permitiendo valores vacios
+     * @param sn Scanner para preguntar las caracteristicas
+     */
     private static void buscarProductos(Scanner sn) {
+        StringBuilder filter = new StringBuilder();
 
+        String nombre = Funciones.dimeStringVacio("Inserta nombre", sn);
+        String talla = Funciones.dimeStringVacio("Inserta talla", sn);
+        String color = Funciones.dimeStringVacio("Inserta color", sn);
+
+        // Filtro dinamico
+        if (!nombre.isEmpty()) filter.append("nombre = %").append(nombre).append("%");
+        if (!talla.isEmpty()) {
+            if (!filter.isEmpty()) filter.append(", ");
+            filter.append("talla = %").append(talla).append("%");
+        }
+        if (!color.isEmpty()) {
+            if (!filter.isEmpty()) filter.append(", ");
+            filter.append("color = %").append(color).append("%");
+        }
+
+        // Si no esta vacio, se le inserta el where
+        if (!filter.isEmpty()) filter.insert(0, "where ");
+
+        // Se obtienen los productos
+        List<Producto> productos = ProductoDao.mostrarProductos(filter.toString());
+
+        // Se imprimen
+        productos.forEach(System.out::println);
     }
 }
+
+// No hay commit de esto, haz un commit, un pull y luego un push
