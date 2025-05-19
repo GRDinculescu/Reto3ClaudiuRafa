@@ -83,7 +83,7 @@ public class Informes {
 
         do {
             codigo = Funciones.dimeEntero("Inserte codigo de cliente", sn);
-        } while (Funciones.dimeSiONo("¿Es ese el codigo?", sn));
+        } while (!Funciones.dimeSiONo("¿Es ese el codigo?", sn));
 
         List<Pedido> pedidos = PedidoDao.mostrarPedidosPorCodigoCliente(codigo);
 

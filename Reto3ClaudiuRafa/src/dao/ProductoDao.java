@@ -156,28 +156,22 @@ public class ProductoDao {
 		List<Producto> productos = new ArrayList<>();
 
 		try (Connection con = Conexion.abreconexion()) {
-			String query = "select p.idProducto, idCategoria, nombre, p.precio, descripcion, color, talla, stock from productos p\n" +
-					"inner join pedidoproducto pp on p.idProducto = pp.idProducto\n" +
-					"having (\n" +
-					"\tselect count(idProducto)\n" +
-					"    from pedidoproducto\n" +
-					"    group by idProducto\n" +
-					") =\n" +
-					"(\n" +
-					"\tselect count(idProducto)\n" +
-					"    from pedidoproducto\n" +
-					"    group by idProducto\n" +
-					"    order by idProducto desc\n" +
+			String query = "select p.idproducto, p.idcategoria, p.nombre, p.precio, p.descripcion, p.color, p.talla, p.stock from productos p\n" +
+					"inner join pedidoproducto pp on p.idproducto = pp.idproducto\n" +
+					"group by p.idproducto\n" +
+					"having sum(pp.unidades) = (\n" +
+					"\tselect sum(pp.unidades) from pedidoproducto pp\n" +
+					"    group by pp.idproducto\n" +
+					"    order by sum(pp.unidades) desc\n" +
 					"    limit 1\n" +
-					");";
+					")";
 
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()){
-				Categoria c = new Categoria();
-				c.setId(rs.getInt("idCategoria"));
+				Categoria c = CategoriaDao.mostrarCategorias(rs.getInt("idCategoria"));
 
 				Producto p = new Producto(
 						rs.getInt("idProducto"),

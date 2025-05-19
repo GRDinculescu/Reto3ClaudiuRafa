@@ -76,18 +76,21 @@ public class Catalogo {
         StringBuilder filter = new StringBuilder();
 
         String nombre = Funciones.dimeStringVacio("Inserta nombre", sn);
+        nombre.replace("\"", "").replace("'", "");
         String talla = Funciones.dimeStringVacio("Inserta talla", sn);
+        talla.replace("\"", "").replace("'", "");
         String color = Funciones.dimeStringVacio("Inserta color", sn);
+        color.replace("\"", "").replace("'", "");
 
         // Filtro dinamico
-        if (!nombre.isEmpty()) filter.append("nombre = %").append(nombre).append("%");
+        if (!nombre.isEmpty()) filter.append("nombre like \"%").append(nombre).append("%\"");
         if (!talla.isEmpty()) {
-            if (!filter.isEmpty()) filter.append(", ");
-            filter.append("talla = %").append(talla).append("%");
+            if (!filter.isEmpty()) filter.append(" and ");
+            filter.append("talla like \"%").append(talla).append("%\"");
         }
         if (!color.isEmpty()) {
-            if (!filter.isEmpty()) filter.append(", ");
-            filter.append("color = %").append(color).append("%");
+            if (!filter.isEmpty()) filter.append(" and ");
+            filter.append("color like \"%").append(color).append("%\"");
         }
 
         // Si no esta vacio, se le inserta el where

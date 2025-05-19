@@ -128,8 +128,7 @@ public class PedidoDao {
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()){
-				Cliente c = new Cliente();
-				c.setId(rs.getInt("p.idCliente"));
+				Cliente c = ClienteDao.mostrarClientes(rs.getInt("p.idCliente"));
 
 				Pedido p = new Pedido(
 						rs.getInt("idPedido"),
