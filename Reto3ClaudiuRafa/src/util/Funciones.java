@@ -134,7 +134,7 @@ public class Funciones {
 	
 	public static String convierte_Date_a_String(Date fDate)
 	{
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		return sdf.format(fDate);
 	}
 	
@@ -196,7 +196,6 @@ public class Funciones {
 	 * @param sn Scanner para el string
 	 * @return Devuelve el string que se inserto por consola
 	 */
-	public static String dimeStringVacio(String mensaje, Scanner sn){
 		System.out.println(mensaje);
 		return sn.nextLine();
 	}
