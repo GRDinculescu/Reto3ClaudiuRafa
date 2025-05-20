@@ -150,6 +150,6 @@ public class Pedidos {
     }
 
     private static void mostrarPedidos(Scanner sn){
-    	PedidoProductoDao.mostrarPedidoProductos(" INNER JOIN pedidos ON pedidoProducto.idPedido = pedidos.idPedido WHERE MONTH(pedidos.fecha) = MONTH(NOW()) ORDER BY Fecha DESC").forEach(t -> {System.out.println(t.mostrarPedidoProducto());});
+    	PedidoProductoDao.mostrarPedidoProductos(" INNER JOIN pedidos ON pedidoProducto.idPedido = pedidos.idPedido WHERE MONTH(pedidos.fecha) = MONTH(NOW()) ORDER BY Fecha DESC").forEach(System.out::println);
     }
 }
