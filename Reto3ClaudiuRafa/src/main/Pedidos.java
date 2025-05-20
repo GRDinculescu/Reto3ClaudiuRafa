@@ -61,17 +61,19 @@ public class Pedidos {
     	// Cliente elegido
     	Cliente cliente = clientesTemp.get(0);
     	System.out.println("Creando pedido para "+cliente.getNombre()+"...");
-    	
+		System.out.println("Presiona enter para continuar...");
+		sn.nextLine();
     	
     	List<Producto> productos = new ArrayList<Producto>();
     	List<Producto> productosDB = ProductoDao.mostrarProductos();
     	List<Pedido> pedidos = new ArrayList<Pedido>();
     	List<PedidoProducto> pedidoProductos = new ArrayList<PedidoProducto>();
 
+    	productosDB.forEach(System.out::println);
+    	
     	// Ir añadiendo pedidos
     	while (true) {
     		// Preguntar pedido
-    		productosDB.forEach(System.out::println);
     		System.out.println("Introduce el nombre del producto que quieres añadir a la cesta (No introduzcas nada para salir): ");
     		String nombre = sn.nextLine();
     		// Salir si se pide
@@ -82,22 +84,25 @@ public class Pedidos {
 				if(productoTemp.getNombre().equals(nombre)) producto = productoTemp;
 			}
     		if (producto == null) {
-    			System.out.println("Pedido no encontrado");
+    			System.out.println("Producto no encontrado");
     		} else {
     			// Comprar pedido
-    			int unidades = util.Funciones.dimeEntero("¿Cuantas unidades de ese producto quieres comprar? ", sn);
+    			int unidades = 0;
+    			do {
+    				unidades = util.Funciones.dimeEntero("¿Cuantas unidades de ese producto quieres comprar? ", sn);
+				} while (unidades<=0);
     			
     			// Añadir el producto a la cesta
     			if(producto.getStock() < unidades) { // Si no hay stock suficiente
     				unidades = producto.getStock();
     				producto.setStock(0);
     				if (!productos.contains(producto)) productos.add(producto);
-    				System.out.println("Se han añadido a la cesta "+unidades+" unidades de "+producto.getNombre()+" debido a que se ha agotado el stock");
+    				System.out.println("Se han añadido a la cesta "+unidades+" unidades de '"+producto.getNombre()+"' debido a que se ha agotado el stock");
     			
     			} else { // Si hay stock suficiente
     				producto.setStock(producto.getStock()-unidades);
     				if (!productos.contains(producto)) productos.add(producto);
-    				System.out.println("Se han añadido a la cesta "+unidades+" unidades de "+producto.getNombre());
+    				System.out.println("Se han añadido a la cesta "+unidades+" unidades de '"+producto.getNombre()+"'");
     			}
     			
     			// Crear y añadir pedidos a la cesta
@@ -107,8 +112,6 @@ public class Pedidos {
     			pedidoProductos.add(pedidoProducto);
     		}
     		
-    		System.out.println("Presiona enter para continuar...");
-    		sn.nextLine();
     	}
     	
     	if(!pedidos.isEmpty()) {
@@ -147,14 +150,6 @@ public class Pedidos {
     }
 
     private static void mostrarPedidos(Scanner sn){
-    	PedidoProductoDao.mostrarPedidoProductos(" INNER JOIN pedidos ON pedidoProducto.idPedido = pedidos.idPedido WHERE MONTH(pedidos.fecha) = MONTH(NOW()) ORDER BY Fecha DESC").forEach(t -> {
-    		System.out.println("\nFecha: "+t.getPedido().getFecha()+
-    				"\nDireccion de envio: "+t.getPedido().getDireccionEnvio()+
-    				"\nPrecio total: "+t.getPedido().getPrecioTotal()+
-    				"\nUnidades compradas: "+t.getUnidades()+
-    				"\nNombre del cliente: "+t.getPedido().getCliente().getNombre()+
-    				"\nProducto: "+t.getProducto().getNombre() +
-    				"\nCategoria del producto: "+t.getProducto().getCategoria());
-    	});
+    	PedidoProductoDao.mostrarPedidoProductos(" INNER JOIN pedidos ON pedidoProducto.idPedido = pedidos.idPedido WHERE MONTH(pedidos.fecha) = MONTH(NOW()) ORDER BY Fecha DESC").forEach(t -> {System.out.println(t.mostrarPedidoProducto());});
     }
 }
