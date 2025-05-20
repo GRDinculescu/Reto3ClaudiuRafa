@@ -8,7 +8,6 @@ import util.Funciones;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -76,11 +75,11 @@ public class Catalogo {
         StringBuilder filter = new StringBuilder();
 
         String nombre = Funciones.dimeStringVacio("Inserta nombre", sn);
-        nombre.replace("\"", "").replace("'", "");
+        //nombre.replace("\"", "").replace("'", "");
         String talla = Funciones.dimeStringVacio("Inserta talla", sn);
-        talla.replace("\"", "").replace("'", "");
+        //talla.replace("\"", "").replace("'", "");
         String color = Funciones.dimeStringVacio("Inserta color", sn);
-        color.replace("\"", "").replace("'", "");
+        //color.replace("\"", "").replace("'", "");
 
         // Filtro dinamico
         if (!nombre.isEmpty()) filter.append("nombre like \"%").append(nombre).append("%\"");
@@ -103,5 +102,3 @@ public class Catalogo {
         productos.forEach(System.out::println);
     }
 }
-
-// No hay commit de esto, haz un commit, un pull y luego un push

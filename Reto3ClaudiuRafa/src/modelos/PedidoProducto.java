@@ -51,13 +51,22 @@ public class PedidoProducto {
 
     @Override
     public String toString() {
-        return "PedidoProducto{" +
-                "id=" + id +
-                ", pedido=" + pedido +
-                ", producto=" + producto +
-                ", unidades=" + unidades +
-                ", precio=" + precio +
-                '}';
+        return "PedidoProducto: " +
+                "Id=" + id +
+                ", Pedido=" + pedido +
+                ", Producto=" + producto +
+                ", Unidades=" + unidades +
+                ", Precio=" + precio;
+    }
+
+    public String mostrarPedidoProducto(){
+        return ("\nFecha: "+ pedido.getFecha().getTime() +
+                "\nDireccion de envio: "+ pedido.getDireccionEnvio() +
+                "\nPrecio total: "+ precio +
+                "\nUnidades compradas: "+ unidades +
+                "\nNombre del cliente: "+ pedido.getCliente().getNombre() +
+                "\nProducto: "+ producto.getNombre() +
+                "\nCategoria del producto: "+ producto.getCategoria().getNombre());
     }
 
     public int getId() {

@@ -160,20 +160,35 @@ public class Mantenimientos {
         System.out.println("=== Busqueda por codigo ===");
         int codigo = Funciones.dimeEntero("Inserte codigo" ,sn);
 
-        String filtro = "where codigo = " + codigo + " limit 1";
-        List<Cliente> clientes = ClienteDao.mostrarClientes(filtro);
+        List<Cliente> clientes = ClienteDao.mostrarClientes();
 
-        if (!clientes.isEmpty()){
-            Cliente cliente = clientes.getFirst();
+        Cliente cliente = null;
 
+        for (Cliente c : clientes){
+            if (c.getCodigo() == codigo) {
+                cliente = c;
+                break;
+            }
+        }
+
+        if (cliente != null){
             System.out.println(cliente);
 
             cliente.setNombre(Funciones.dimeSiONo("¿Quieres cambiarle el nombre?", sn) ?
                 Funciones.dimeString("Inserta nombre", sn) : clientes.getFirst().getNombre());
             cliente.setDireccion(Funciones.dimeSiONo("¿Quieres cambiar la direccion?", sn) ?
                     Funciones.dimeString("Inserte nueva direccion", sn) : clientes.getFirst().getDireccion());
-            cliente.setCodigo(Funciones.dimeSiONo("¿Quieres cambiar el codigo?", sn) ?
-                    Funciones.dimeEntero("Inserte nuevo codigo", sn) : clientes.getFirst().getCodigo());
+
+            if (Funciones.dimeSiONo("¿Quieres cambiar el codigo?", sn)){
+                List<Integer> codigos = new ArrayList<>();
+                for (Cliente c : clientes) codigos.add(c.getCodigo());
+
+                int nuevoCodigo;
+                do {
+                    nuevoCodigo = Funciones.dimeEntero("Inserte codigo", sn);
+                } while (codigos.contains(nuevoCodigo));
+                cliente.setCodigo(nuevoCodigo);
+            }
 
             ClienteDao.actualizarCliente(cliente);
         } else {
