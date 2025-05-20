@@ -134,7 +134,7 @@ public class Funciones {
 	
 	public static String convierte_Date_a_String(Date fDate)
 	{
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		return sdf.format(fDate);
 	}
 	
