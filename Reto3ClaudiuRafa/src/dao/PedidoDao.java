@@ -108,40 +108,4 @@ public class PedidoDao {
 		}
 		return listaPedidos;
 	}
-
-	/**
-	 * Muestra los pedidos de un cliente buscandolo por su codigo
-	 * @param codigo Codigo del cliente. NO el ID
-	 * @return Devuelve lista de pedidos. Si no tiene, estara vacia.
-	 */
-	public static List<Pedido> mostrarPedidosPorCodigoCliente(int codigo){
-		List<Pedido> pedidos = new ArrayList<>();
-
-		try (Connection con = Conexion.abreconexion()) {
-			String query = "SELECT p.idPedido, p.idCliente, p.precioTotal, p.direccionEnvio, p.fecha FROM pedidos p\n" +
-					"inner join clientes c on p.idCliente = c.idCliente\n" +
-					"where c.codigo = ?;";
-			PreparedStatement stmt = con.prepareStatement(query);
-
-			stmt.setInt(1, codigo);
-
-			ResultSet rs = stmt.executeQuery();
-
-			while (rs.next()){
-				Cliente c = ClienteDao.mostrarClientes(rs.getInt("p.idCliente"));
-
-				Pedido p = new Pedido(
-						rs.getInt("idPedido"),
-						c, // Del cliente solo queremos su id
-						rs.getDouble("precioTotal"),
-						rs.getString("direccionEnvio"),
-						rs.getDate("fecha")
-				);
-				pedidos.add(p);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return pedidos;
-	}
 }

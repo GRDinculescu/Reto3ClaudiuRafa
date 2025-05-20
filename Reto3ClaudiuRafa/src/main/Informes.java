@@ -90,7 +90,7 @@ public class Informes {
             codigo = Funciones.dimeEntero("Inserte codigo de cliente", sn);
         } while (!Funciones.dimeSiONo("¿Es ese el codigo?", sn));
 
-        String filter = "where codigo = " + codigo;
+        String filter = "where idCliente = (select idCliente from clientes where codigo = " + codigo + ")";
         List<PedidoProducto> pedidoProductos = PedidoProductoDao.mostrarPedidoProductos(filter);
 
         if (!pedidoProductos.isEmpty()){
