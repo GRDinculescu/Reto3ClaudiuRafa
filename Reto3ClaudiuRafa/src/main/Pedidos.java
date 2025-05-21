@@ -56,7 +56,9 @@ public class Pedidos {
     		code = util.Funciones.dimeEntero("\nIntroduce tu codigo de cliente ([0] para salir): ", sn);
     		if(code == 0) {return;}
     		clientesTemp = ClienteDao.mostrarClientes("WHERE codigo = "+code);
-		} while (clientesTemp.isEmpty());
+    		if (!clientesTemp.isEmpty()) break;
+    		System.out.println("Codigo no encontrado");
+		} while (true);
     	
     	// Cliente elegido
     	Cliente cliente = clientesTemp.get(0);
@@ -70,6 +72,8 @@ public class Pedidos {
     	List<PedidoProducto> pedidoProductos = new ArrayList<PedidoProducto>();
 
     	productosDB.forEach(System.out::println);
+    	
+    	Pedido pedido = new Pedido(cliente, 0, null, Date.from(Instant.now()));
     	
     	// Ir añadiendo pedidos
     	while (true) {
@@ -106,8 +110,7 @@ public class Pedidos {
     			}
     			
     			// Crear y añadir pedidos a la cesta
-    			Pedido pedido = new Pedido(cliente, producto.getPrecio()*unidades, null, Date.from(Instant.now()));
-    			PedidoProducto pedidoProducto = new PedidoProducto(pedido, producto, unidades, producto.getPrecio());
+    			PedidoProducto pedidoProducto = new PedidoProducto(pedido, producto, unidades, producto.getPrecio()*unidades);
     			pedidos.add(pedido);
     			pedidoProductos.add(pedidoProducto);
     		}
@@ -130,14 +133,16 @@ public class Pedidos {
         	// Guradar pedido
         	
         	double precioTotal = 0;
-
+        	
+        	for (PedidoProducto pedidoProducto : pedidoProductos) {
+        		precioTotal += pedidoProducto.getPrecio();
+			}
+        	
         	productos.forEach(ProductoDao::actualizarProducto);
 
-        	for (Pedido pedido : pedidos) {
-				precioTotal+=pedido.getPrecioTotal();
-				pedido.setDireccionEnvio(dirEnvio);
-				PedidoDao.insertarPedido(pedido);
-			}
+        	pedido.setPrecioTotal(precioTotal);
+			pedido.setDireccionEnvio(dirEnvio);
+			PedidoDao.insertarPedido(pedido);
         	
         	pedidoProductos.forEach(PedidoProductoDao::insertarPedidoProducto);
 
