@@ -2,7 +2,6 @@ package main;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -16,6 +15,11 @@ import modelos.Pedido;
 import modelos.PedidoProducto;
 import modelos.Producto;
 import util.Funciones;
+/**
+ * @author Claudiu
+ * @version 1.0
+ * @since 12/05/2025
+ */
 
 public class Pedidos {
     public static void menu(Scanner sn){

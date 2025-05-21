@@ -11,7 +11,15 @@ import modelos.Categoria;
 import modelos.Cliente;
 import modelos.Producto;
 import util.Conexion;
+/**
+ * @author Claudiu
+ * @version 1.0
+ * @since 12/05/2025
+ */
 
+/**
+ * El DAO para modificar y listar Productos
+ */
 public class ProductoDao {
 	/**
 	 * Una lista de los productos que existen, sin filtros

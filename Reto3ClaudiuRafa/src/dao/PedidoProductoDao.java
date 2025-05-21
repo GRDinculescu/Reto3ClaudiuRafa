@@ -13,6 +13,15 @@ import modelos.Producto;
 import util.Conexion;
 import util.Funciones;
 
+/**
+ * @author Claudiu
+ * @version 1.0
+ * @since 12/05/2025
+ */
+
+/**
+ * El DAO para modificar y listar pedidoProductos
+ */
 public class PedidoProductoDao {
 	/**
 	 * Una lista de los pedidos de productos que existen, sin filtros
