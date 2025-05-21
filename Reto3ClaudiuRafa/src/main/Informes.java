@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 /**
  * @author Giovanni
- * @version 0.1.5
+ * @version 0.3.0
  * @since 14/0.5/2025
  */
 public class Informes {
@@ -23,6 +23,7 @@ public class Informes {
     public static void menu(Scanner sn){
         System.out.println("\n=== Informes ===");
         String menu = """
+                
                 Elige opcion:
                 1. Bajo stock
                 2. Pedidos por cliente
@@ -39,7 +40,7 @@ public class Informes {
                 case 1 -> bajoStock(sn);
                 case 2 -> pedidosPorCliente(sn);
                 case 3 -> productosMasVendidos();
-                default -> System.out.println("--- Opcion invalida ---");
+                default -> System.err.println("--- Opcion invalida ---");
             }
         }
     }
@@ -62,11 +63,12 @@ public class Informes {
                     System.out.println(p);
 
                     if (Funciones.dimeSiONo("¿Quieres actualizar el stock?", sn)) {
-                        int stock;
+                        int stock = Funciones.dimeEntero("Inserte cuanto stock se subira", sn);
 
-                        do {
+                        while (stock <= 0){
+                            System.err.println("El stock debe ser mayor a 0");
                             stock = Funciones.dimeEntero("Inserte cuanto stock se subira", sn);
-                        } while (stock <= 0);
+                        }
 
                         String filter = "stock = stock + " + stock + " where stock < 5 and idProducto = " + p.getId();
                         ProductoDao.actualizarProducto(filter);

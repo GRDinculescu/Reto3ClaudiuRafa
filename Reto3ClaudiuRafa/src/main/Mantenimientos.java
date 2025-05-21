@@ -26,6 +26,7 @@ public class Mantenimientos {
     public static void menu(Scanner sn){
         System.out.println("\n=== Mantenimiento ===");
         String menu = """
+                
                 Elige opcion:
                 1. Gestion de categorías
                 2. Gestion de productos
@@ -42,7 +43,7 @@ public class Mantenimientos {
                 case 1 -> gestionCategorias(sn);
                 case 2 -> gestionProductos(sn);
                 case 3 -> gestionClientes(sn);
-                default -> System.out.println("--- Opcion invalida ---");
+                default -> System.err.println("--- Opcion invalida ---");
             }
         }
     }
@@ -91,6 +92,8 @@ public class Mantenimientos {
                         break;
                     }
                 }
+
+                if (categoria == null) System.err.println("Categoria no encontrada");
             } while (categoria == null);
 
             producto.setCategoria(categoria);
@@ -108,6 +111,7 @@ public class Mantenimientos {
     private static void gestionClientes(Scanner sn){
         System.out.println("\n=== Gestion de clientes ===");
         String menu = """
+                
                 Elige opcion:
                 1. Alta de nuevo cliente
                 2. Busqueda por codigo
@@ -122,7 +126,7 @@ public class Mantenimientos {
             switch (op){
                 case 1 -> altaCliente(sn);
                 case 2 -> busquedaCodigo(sn);
-                default -> System.out.println("--- Opcion invalida ---");
+                default -> System.err.println("--- Opcion invalida ---");
             }
         }
     }
@@ -144,10 +148,11 @@ public class Mantenimientos {
         cliente.setDireccion(Funciones.dimeString("Inserte direccion", sn));
 
         // Validar que el codigo no esta en la tabla
-        int codigo;
-        do {
+        int codigo = Funciones.dimeEntero("Inserte codigo", sn);
+        while (codigos.contains(codigo)){
+            System.err.println("Codigo repetido");
             codigo = Funciones.dimeEntero("Inserte codigo", sn);
-        } while (codigos.contains(codigo));
+        }
         cliente.setCodigo(codigo);
 
         ClienteDao.insertarCliente(cliente);
@@ -184,10 +189,11 @@ public class Mantenimientos {
                 List<Integer> codigos = new ArrayList<>();
                 for (Cliente c : clientes) codigos.add(c.getCodigo());
 
-                int nuevoCodigo;
-                do {
+                int nuevoCodigo = Funciones.dimeEntero("Inserte codigo", sn);
+                while (codigos.contains(nuevoCodigo)) {
+                    System.err.println("Codigo incorrecto");
                     nuevoCodigo = Funciones.dimeEntero("Inserte codigo", sn);
-                } while (codigos.contains(nuevoCodigo));
+                }
                 cliente.setCodigo(nuevoCodigo);
             }
 

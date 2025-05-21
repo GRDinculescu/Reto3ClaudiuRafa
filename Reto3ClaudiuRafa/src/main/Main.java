@@ -12,6 +12,7 @@ public class Main {
 		Random r = new Random();
 
 		String menu = """
+				
 				Elige opcion:
 				1. Mantenimientos
 				2. Catalogo de productos
@@ -40,7 +41,7 @@ public class Main {
 				case 4 -> {
 					Informes.menu(sn);
 				}
-				default -> System.out.println("\n--- Opcion invalida ---");
+				default -> System.err.println("--- Opcion invalida ---");
 			}
 		}
 	}

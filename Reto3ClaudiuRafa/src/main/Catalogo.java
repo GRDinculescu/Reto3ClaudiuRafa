@@ -23,6 +23,7 @@ public class Catalogo {
     public static void menu(Scanner sn){
         System.out.println("\n=== Productos ===");
         String menu = """
+                
                 Elige opcion:
                 1. Listar productos por categoría
                 2. Buscar productos
@@ -37,7 +38,7 @@ public class Catalogo {
             switch (op){
                 case 1 -> listarProductosPorCategoria(sn);
                 case 2 -> buscarProductos(sn);
-                default -> System.out.println("--- Opcion invalida ---");
+                default -> System.err.println("--- Opcion invalida ---");
             }
         }
     }
@@ -56,10 +57,11 @@ public class Catalogo {
         System.out.println("Categorias:");
         categorias.forEach(System.out::println);
 
-        int op;
-        do {
+        int op = Funciones.dimeEntero("Inserte id categoria", sn);
+        while (!ids.contains(op)) {
+            System.err.println("ID no encontrado");
             op = Funciones.dimeEntero("Inserte id categoria", sn);
-        } while (!ids.contains(op));
+        }
 
         String filter = "where idCategoria = " + op;
         List<Producto> productos = ProductoDao.mostrarProductos(filter);
