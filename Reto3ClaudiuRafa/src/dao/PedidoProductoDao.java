@@ -133,6 +133,10 @@ public class PedidoProductoDao {
 		return listaPedidoProductos;
 	}
 
+	/**
+	 * Muestra todos los productos pedidos, agrupados por pedido, va aqui por que hay que pasarle una lista de pedidoProductos, y se supone que para eso sirve el DAO
+	 * @param pedidoProductos Los pedidoProducto que se imprimiran
+	 */
 	public static void mostrarPedidos(List<PedidoProducto> pedidoProductos) {
 		if (!pedidoProductos.isEmpty()){
 			Pedido lastPedido = new Pedido();

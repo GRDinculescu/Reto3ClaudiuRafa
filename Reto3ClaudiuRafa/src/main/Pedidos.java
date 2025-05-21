@@ -155,6 +155,6 @@ public class Pedidos {
 
     private static void mostrarPedidos(Scanner sn){
 		System.out.println("\n=== Pedidos del mes ===");
-    	PedidoProductoDao.mostrarPedidoProductos(" INNER JOIN pedidos ON pedidoProducto.idPedido = pedidos.idPedido WHERE MONTH(pedidos.fecha) = MONTH(NOW()) ORDER BY Fecha DESC").forEach(System.out::println);
+		PedidoProductoDao.mostrarPedidos(PedidoProductoDao.mostrarPedidoProductos(" INNER JOIN pedidos ON pedidoProducto.idPedido = pedidos.idPedido WHERE MONTH(pedidos.fecha) = MONTH(NOW()) ORDER BY Fecha DESC"));
     }
 }
