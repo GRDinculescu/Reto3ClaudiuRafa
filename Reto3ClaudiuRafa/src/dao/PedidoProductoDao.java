@@ -9,7 +9,9 @@ import java.util.List;
 
 import modelos.Pedido;
 import modelos.PedidoProducto;
+import modelos.Producto;
 import util.Conexion;
+import util.Funciones;
 
 public class PedidoProductoDao {
 	/**
@@ -129,6 +131,29 @@ public class PedidoProductoDao {
 			e.printStackTrace();
 		}
 		return listaPedidoProductos;
+	}
+
+	public static void mostrarPedidos(List<PedidoProducto> pedidoProductos) {
+		if (!pedidoProductos.isEmpty()){
+			Pedido lastPedido = new Pedido();
+			for (PedidoProducto pp : pedidoProductos){
+				Pedido pedido = pp.getPedido();
+				Producto producto = pp.getProducto();
+
+				if (pedido.getId() != lastPedido.getId()){
+					System.out.printf("%n[%s] Total: %.2f$ | Direccion de envio: %s%n",
+							Funciones.convierte_Date_a_String(pedido.getFecha()), pedido.getPrecioTotal(), pedido.getDireccionEnvio());
+				}
+
+				System.out.printf("    Categoria: %s | Nombre: %s | Unidades: %d%n",
+						producto.getCategoria().getNombre(), producto.getNombre(), pp.getUnidades());
+
+				lastPedido = pedido;
+			}
+			System.out.println(); // Espacio para separar
+		} else {
+			System.out.println("El cliente no tiene pedidos\n");
+		}
 	}
 	
 }
