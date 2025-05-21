@@ -104,4 +104,31 @@ public class PedidoProductoDao {
 		return listaPedidoProductos;
 	}
 	
+	/**
+	 * Te devuelve los pedidos con los productos que pertenezcan al cliente con ese codigo
+	 * @param codigoCliente el codigo del cliente que bucar
+	 * @return Los pedidos que pertenezcan al cliente con ese codigo
+	 */
+	public static List<PedidoProducto> mostrarPedidoProductosPorCodigoCliente(int codigoCliente) {
+		ArrayList<PedidoProducto> listaPedidoProductos;
+
+		listaPedidoProductos = new ArrayList<PedidoProducto>();
+		try (Connection con = Conexion.abreconexion()){
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM pedidoProducto pp WHERE"
+					+ "INNER JOIN pedidos p ON pp.idPedido = p.idPedido"
+					+ "INNER JOIN clientes c ON p.idCliente = c.idCliente"
+					+ "WHERE c.codigo = ?");
+			
+			stmt.setInt(1, codigoCliente);
+			
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				listaPedidoProductos.add(new PedidoProducto(rs.getInt("idPedidoProducto"), PedidoDao.mostrarPedidos(rs.getInt("idpedido")), ProductoDao.mostrarProductos(rs.getInt("idProducto")), rs.getInt("unidades"), rs.getDouble("precio")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaPedidoProductos;
+	}
+	
 }
