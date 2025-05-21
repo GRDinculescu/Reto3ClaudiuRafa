@@ -12,6 +12,11 @@ import modelos.Cliente;
 import modelos.Pedido;
 import modelos.Producto;
 import util.Conexion;
+/**
+ * @author Claudiu
+ * @version 1.0
+ * @since 12/05/2025
+ */
 
 /**
  * El DAO para modificar y listar pedidos

@@ -13,6 +13,15 @@ import modelos.Producto;
 import util.Conexion;
 import util.Funciones;
 
+/**
+ * @author Claudiu
+ * @version 1.0
+ * @since 12/05/2025
+ */
+
+/**
+ * El DAO para modificar y listar pedidoProductos
+ */
 public class PedidoProductoDao {
 	/**
 	 * Una lista de los pedidos de productos que existen, sin filtros
@@ -133,6 +142,10 @@ public class PedidoProductoDao {
 		return listaPedidoProductos;
 	}
 
+	/**
+	 * Muestra todos los productos pedidos, agrupados por pedido, va aqui por que hay que pasarle una lista de pedidoProductos, y se supone que para eso sirve el DAO
+	 * @param pedidoProductos Los pedidoProducto que se imprimiran
+	 */
 	public static void mostrarPedidos(List<PedidoProducto> pedidoProductos) {
 		if (!pedidoProductos.isEmpty()){
 			Pedido lastPedido = new Pedido();

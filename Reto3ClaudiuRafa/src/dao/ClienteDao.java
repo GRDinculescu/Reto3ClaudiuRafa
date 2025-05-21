@@ -10,6 +10,11 @@ import java.util.List;
 import modelos.Cliente;
 import modelos.PedidoProducto;
 import util.Conexion;
+/**
+ * @author Claudiu
+ * @version 1.0
+ * @since 12/05/2025
+ */
 
 /**
  * El DAO para modificar y listar clientes
