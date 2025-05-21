@@ -24,6 +24,7 @@ public class Mantenimientos {
      * @param sn Scanner para preguntar las opciones y pasar a funciones
      */
     public static void menu(Scanner sn){
+        System.out.println("\n=== Mantenimiento ===");
         String menu = """
                 Elige opcion:
                 1. Gestion de categorías
@@ -51,7 +52,7 @@ public class Mantenimientos {
      * @param sn Scanner para preguntar los datos de la categoria
      */
     private static void gestionCategorias(Scanner sn){
-        System.out.println("=== Gestion de categorías ===");
+        System.out.println("\n=== Gestion de categorías ===");
         Categoria categoria = new Categoria(
                 Funciones.dimeString(
                         "Inserte el nombre de nueva categoria: ",
@@ -65,7 +66,7 @@ public class Mantenimientos {
      * @param sn Scanner para preguntar los datos del producto
      */
     private static void gestionProductos(Scanner sn){
-        System.out.println("=== Gestion de productos ===");
+        System.out.println("\n=== Gestion de productos ===");
         List<Categoria> categorias = CategoriaDao.mostrarCategorias();
 
         if (!categorias.isEmpty()) {
@@ -105,7 +106,7 @@ public class Mantenimientos {
      * @param sn Scanner para preguntar la opcion y pasar a funciones
      */
     private static void gestionClientes(Scanner sn){
-        System.out.println("=== Gestion de clientes ===");
+        System.out.println("\n=== Gestion de clientes ===");
         String menu = """
                 Elige opcion:
                 1. Alta de nuevo cliente
@@ -131,7 +132,7 @@ public class Mantenimientos {
      * @param sn Scanner para preguntar los datos
      */
     private static void altaCliente(Scanner sn){
-        System.out.println("=== Alta de nuevo cliente ===");
+        System.out.println("\n=== Alta de nuevo cliente ===");
         Cliente cliente = new Cliente();
 
         // Obtenemos todos los clientes para obtener sus codigos
@@ -157,7 +158,7 @@ public class Mantenimientos {
      * @param sn Scanner para insertar el codigo y los nuevos datos
      */
     private static void busquedaCodigo(Scanner sn){
-        System.out.println("=== Busqueda por codigo ===");
+        System.out.println("\n=== Busqueda por codigo ===");
         int codigo = Funciones.dimeEntero("Inserte codigo" ,sn);
 
         List<Cliente> clientes = ClienteDao.mostrarClientes();

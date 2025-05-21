@@ -2,6 +2,9 @@ package modelos;
 
 import util.Funciones;
 
+import java.time.LocalDate;
+import java.util.Locale;
+
 /**
  * @author Giovanni
  * @version 0.1
@@ -53,7 +56,7 @@ public class PedidoProducto {
 
     @Override
     public String toString() {
-        return "\nFecha: "+ Funciones.convierte_Date_a_String(pedido.getFecha()) +
+        return "\nFecha: "+ pedido.getFecha() +
                 "\nDireccion de envio: "+ pedido.getDireccionEnvio() +
                 "\nPrecio total: "+ precio +
                 "\nUnidades compradas: "+ unidades +

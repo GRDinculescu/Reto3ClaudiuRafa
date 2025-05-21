@@ -114,10 +114,10 @@ public class PedidoProductoDao {
 
 		listaPedidoProductos = new ArrayList<PedidoProducto>();
 		try (Connection con = Conexion.abreconexion()){
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM pedidoProducto pp WHERE"
-					+ "INNER JOIN pedidos p ON pp.idPedido = p.idPedido"
-					+ "INNER JOIN clientes c ON p.idCliente = c.idCliente"
-					+ "WHERE c.codigo = ?");
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM pedidoProducto pp"
+					+ " INNER JOIN pedidos p ON pp.idPedido = p.idPedido"
+					+ " INNER JOIN clientes c ON p.idCliente = c.idCliente"
+					+ " WHERE c.codigo = ?");
 			
 			stmt.setInt(1, codigoCliente);
 			

@@ -1,6 +1,5 @@
 package main;
 
-import dao.PedidoDao;
 import dao.PedidoProductoDao;
 import dao.ProductoDao;
 import modelos.Pedido;
@@ -22,6 +21,7 @@ public class Informes {
      * @param sn Scanner para pasar a otras funciones o preguntar la opcion
      */
     public static void menu(Scanner sn){
+        System.out.println("\n=== Informes ===");
         String menu = """
                 Elige opcion:
                 1. Bajo stock
@@ -49,7 +49,7 @@ public class Informes {
      * @param sn Scanner para preguntar cuanto stock meter
      */
     private static void bajoStock(Scanner sn) {
-        System.out.println("=== Bajo stock ===");
+        System.out.println("\n=== Bajo stock ===");
         String filtro = "where stock < 5";
 
         // Se obtienen los productos y se muestran
@@ -83,18 +83,32 @@ public class Informes {
      * @param sn Scanner para pedir el CODIGO, no ID
      */
     private static void pedidosPorCliente(Scanner sn) {
-        System.out.println("=== Pedidos por cliente ===");
+        System.out.println("\n=== Pedidos por cliente ===");
         int codigo;
 
         do {
             codigo = Funciones.dimeEntero("Inserte codigo de cliente", sn);
         } while (!Funciones.dimeSiONo("¿Es ese el codigo?", sn));
 
-        String filter = "where idCliente = (select idCliente from clientes where codigo = " + codigo + ")";
-        List<PedidoProducto> pedidoProductos = PedidoProductoDao.mostrarPedidoProductos(filter);
+        List<PedidoProducto> pedidoProductos = PedidoProductoDao.mostrarPedidoProductosPorCodigoCliente(codigo);
 
         if (!pedidoProductos.isEmpty()){
-            pedidoProductos.forEach(System.out::println);
+            Pedido lastPedido = new Pedido();
+            for (PedidoProducto pp : pedidoProductos){
+                Pedido pedido = pp.getPedido();
+                Producto producto = pp.getProducto();
+
+                if (pedido.getId() != lastPedido.getId()){
+                    System.out.printf("%n[%s] Total: %.2f$ | Direccion de envio: %s%n",
+                            Funciones.convierte_Date_a_String(pedido.getFecha()), pedido.getPrecioTotal(), pedido.getDireccionEnvio());
+                }
+
+                System.out.printf("    Categoria: %s | Nombre: %s | Unidades: %d%n",
+                        producto.getCategoria().getNombre(), producto.getNombre(), pp.getUnidades());
+
+                lastPedido = pedido;
+            }
+            System.out.println(); // Espacio para separar
         } else {
             System.out.println("El cliente no tiene pedidos\n");
         }
@@ -104,7 +118,7 @@ public class Informes {
      * Muestra los productos mas vendidos, aun si hay empate
      */
     private static void productosMasVendidos() {
-        System.out.println("=== Productos mas vendidos ===");
+        System.out.println("\n=== Productos mas vendidos ===");
         List<Producto> productos = ProductoDao.mostrarProductosMasComprados();
 
         if (!productos.isEmpty()){

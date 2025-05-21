@@ -19,6 +19,7 @@ import util.Funciones;
 
 public class Pedidos {
     public static void menu(Scanner sn){
+		System.out.println("\n=== Pedidos ===");
         String menu = """
                 \nElige opcion:
                 1. Crear pedido
@@ -35,11 +36,9 @@ public class Pedidos {
 
             switch (op){
                 case 1 -> {
-                    System.out.println("=== Creacion de pedido ===");
                     crearPedido(sn);
                 }
                 case 2 -> {
-                    System.out.println("=== Pedidos del mes ===");
                     mostrarPedidos(sn);
                 }
                 default -> System.out.println("--- Opcion invalida ---");
@@ -48,7 +47,7 @@ public class Pedidos {
     }
 
     private static void crearPedido(Scanner sn){
-    	
+		System.out.println("\n=== Creacion de pedido ===");
     	// Que eliga su codigo de cliente
     	int code = -1;
     	List<Cliente> clientesTemp;
@@ -150,6 +149,7 @@ public class Pedidos {
     }
 
     private static void mostrarPedidos(Scanner sn){
+		System.out.println("\n=== Pedidos del mes ===");
     	PedidoProductoDao.mostrarPedidoProductos(" INNER JOIN pedidos ON pedidoProducto.idPedido = pedidos.idPedido WHERE MONTH(pedidos.fecha) = MONTH(NOW()) ORDER BY Fecha DESC").forEach(System.out::println);
     }
 }

@@ -21,6 +21,7 @@ public class Catalogo {
      * @param sn Scanner para pasar a otras funciones o preguntar la opcion
      */
     public static void menu(Scanner sn){
+        System.out.println("\n=== Productos ===");
         String menu = """
                 Elige opcion:
                 1. Listar productos por categoría
@@ -47,6 +48,7 @@ public class Catalogo {
      * @param sn Scanner para preguntar el id de la categoria
      */
     private static void listarProductosPorCategoria(Scanner sn) {
+        System.out.println("\n=== Listar productos por categoria ===");
         List<Categoria> categorias = CategoriaDao.mostrarCategorias();
         List<Integer> ids = new ArrayList<>();
         for (Categoria c : categorias) ids.add(c.getId());
@@ -72,6 +74,7 @@ public class Catalogo {
      * @param sn Scanner para preguntar las caracteristicas
      */
     private static void buscarProductos(Scanner sn) {
+        System.out.println("\n=== Buscar productos ===");
         StringBuilder filter = new StringBuilder();
 
         String nombre = Funciones.dimeStringVacio("Inserta nombre", sn);
