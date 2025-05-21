@@ -1,5 +1,7 @@
 package modelos;
 
+import util.Funciones;
+
 /**
  * @author Giovanni
  * @version 0.1
@@ -51,22 +53,13 @@ public class PedidoProducto {
 
     @Override
     public String toString() {
-        return "PedidoProducto: " +
-                "Id=" + id +
-                ", Pedido=" + pedido +
-                ", Producto=" + producto +
-                ", Unidades=" + unidades +
-                ", Precio=" + precio;
-    }
-
-    public String mostrarPedidoProducto(){
-        return ("\nFecha: "+ pedido.getFecha().getTime() +
+        return "\nFecha: "+ Funciones.convierte_Date_a_String(pedido.getFecha()) +
                 "\nDireccion de envio: "+ pedido.getDireccionEnvio() +
                 "\nPrecio total: "+ precio +
                 "\nUnidades compradas: "+ unidades +
                 "\nNombre del cliente: "+ pedido.getCliente().getNombre() +
                 "\nProducto: "+ producto.getNombre() +
-                "\nCategoria del producto: "+ producto.getCategoria().getNombre());
+                "\nCategoria del producto: "+ producto.getCategoria().getNombre();
     }
 
     public int getId() {

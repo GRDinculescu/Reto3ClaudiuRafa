@@ -1,8 +1,10 @@
 package main;
 
 import dao.PedidoDao;
+import dao.PedidoProductoDao;
 import dao.ProductoDao;
 import modelos.Pedido;
+import modelos.PedidoProducto;
 import modelos.Producto;
 import util.Funciones;
 
@@ -56,16 +58,19 @@ public class Informes {
         if (!productos.isEmpty()) {
             System.out.println("Productos con bajo stock");
             for (Producto p : productos){
-                if (p.getStock() < 5) System.out.println(p);
-            }
+                if (p.getStock() < 5) {
+                    System.out.println(p);
 
-            if (Funciones.dimeSiONo("¿Quieres actualizar el stock?", sn)){
-                // Se pide
-                int stock = Funciones.dimeEntero("Inserte cuanto stock se subira", sn);
+                    if (Funciones.dimeSiONo("¿Quieres actualizar el stock?", sn)) {
+                        int stock;
 
-                if (stock > 0) {
-                    String filter = "stock = stock + " + stock + " where stock < 5";
-                    ProductoDao.actualizarProducto(filter);
+                        do {
+                            stock = Funciones.dimeEntero("Inserte cuanto stock se subira", sn);
+                        } while (stock <= 0);
+
+                        String filter = "stock = stock + " + stock + " where stock < 5 and idProducto = " + p.getId();
+                        ProductoDao.actualizarProducto(filter);
+                    }
                 }
             }
         } else {
@@ -85,10 +90,11 @@ public class Informes {
             codigo = Funciones.dimeEntero("Inserte codigo de cliente", sn);
         } while (!Funciones.dimeSiONo("¿Es ese el codigo?", sn));
 
-        List<Pedido> pedidos = PedidoDao.mostrarPedidosPorCodigoCliente(codigo);
+        String filter = "where idCliente = (select idCliente from clientes where codigo = " + codigo + ")";
+        List<PedidoProducto> pedidoProductos = PedidoProductoDao.mostrarPedidoProductos(filter);
 
-        if (!pedidos.isEmpty()){
-            pedidos.forEach(System.out::println);
+        if (!pedidoProductos.isEmpty()){
+            pedidoProductos.forEach(System.out::println);
         } else {
             System.out.println("El cliente no tiene pedidos\n");
         }
