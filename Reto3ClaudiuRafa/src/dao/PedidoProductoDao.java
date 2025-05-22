@@ -154,8 +154,9 @@ public class PedidoProductoDao {
 				Producto producto = pp.getProducto();
 
 				if (pedido.getId() != lastPedido.getId()){
-					System.out.printf("%n[%s] Total: %.2f$ | Direccion de envio: %s%n",
-							Funciones.convierte_Date_a_String(pedido.getFecha()), pedido.getPrecioTotal(), pedido.getDireccionEnvio());
+					System.out.printf("%n[%s] Nombre: %s | Total: %.2f$ | Direccion de envio: %s%n",
+							Funciones.convierte_Date_a_String(pedido.getFecha()), pedido.getCliente().getNombre(),
+							pedido.getPrecioTotal(), pedido.getDireccionEnvio());
 				}
 
 				System.out.printf("    Categoria: %s | Nombre: %s | Unidades: %d%n",
