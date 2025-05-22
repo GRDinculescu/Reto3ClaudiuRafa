@@ -166,10 +166,11 @@ public class Mantenimientos {
         System.out.println("\n=== Busqueda por codigo ===");
         int codigo = Funciones.dimeEntero("Inserte codigo" ,sn);
 
-        List<Cliente> clientes = ClienteDao.mostrarClientes();
+        List<Cliente> clientes = ClienteDao.mostrarClientes(); // Guarda los clientes
 
         Cliente cliente = null;
 
+        // Busca un cliente con ese codigo
         for (Cliente c : clientes){
             if (c.getCodigo() == codigo) {
                 cliente = c;
@@ -180,11 +181,13 @@ public class Mantenimientos {
         if (cliente != null){
             System.out.println(cliente);
 
+            // Pregunta si se le cambian los valores
             cliente.setNombre(Funciones.dimeSiONo("¿Quieres cambiarle el nombre?", sn) ?
                 Funciones.dimeString("Inserta nombre", sn) : clientes.getFirst().getNombre());
             cliente.setDireccion(Funciones.dimeSiONo("¿Quieres cambiar la direccion?", sn) ?
                     Funciones.dimeString("Inserte nueva direccion", sn) : clientes.getFirst().getDireccion());
 
+            // Valida que el codigo no este repetido y cambia el codigo
             if (Funciones.dimeSiONo("¿Quieres cambiar el codigo?", sn)){
                 List<Integer> codigos = new ArrayList<>();
                 for (Cliente c : clientes) codigos.add(c.getCodigo());
@@ -197,7 +200,7 @@ public class Mantenimientos {
                 cliente.setCodigo(nuevoCodigo);
             }
 
-            ClienteDao.actualizarCliente(cliente);
+            ClienteDao.actualizarCliente(cliente); // Actualiza el cliente
         } else {
             System.err.println("No hay clientes con ese codigo");
             if (Funciones.dimeSiONo("¿Quieres dar de alta al cliente?", sn)){

@@ -2,7 +2,6 @@ package main;
 
 import dao.PedidoProductoDao;
 import dao.ProductoDao;
-import modelos.Pedido;
 import modelos.PedidoProducto;
 import modelos.Producto;
 import util.Funciones;
@@ -59,7 +58,9 @@ public class Informes {
         if (!productos.isEmpty()) {
             System.out.println("Productos con bajo stock");
             for (Producto p : productos){
+                // Si el stock del producto es menor a 5
                 if (p.getStock() < 5) {
+                    // Muestra el producto
                     System.out.println(p);
 
                     if (Funciones.dimeSiONo("¿Quieres actualizar el stock?", sn)) {
@@ -70,6 +71,7 @@ public class Informes {
                             stock = Funciones.dimeEntero("Inserte cuanto stock se subira", sn);
                         }
 
+                        // Actualiza el stock solo a ese producto
                         String filter = "stock = stock + " + stock + " where stock < 5 and idProducto = " + p.getId();
                         ProductoDao.actualizarProducto(filter);
                     }
@@ -92,8 +94,10 @@ public class Informes {
             codigo = Funciones.dimeEntero("Inserte codigo de cliente", sn);
         } while (!Funciones.dimeSiONo("¿Es ese el codigo?", sn));
 
+        // Obtener los pedidos del cliente
         List<PedidoProducto> pedidoProductos = PedidoProductoDao.mostrarPedidoProductosPorCodigoCliente(codigo);
 
+        // Mostrar los pedidos
         PedidoProductoDao.mostrarPedidos(pedidoProductos);
     }
 
@@ -106,7 +110,7 @@ public class Informes {
 
         if (!productos.isEmpty()){
             System.out.println("Productos mas comprados");
-            productos.forEach(System.out::println);
+            productos.forEach(System.out::println); // Muestra los productos mas vendidos/comprados
         } else {
             System.out.println("Aun no se comprado ningún producto");
         }

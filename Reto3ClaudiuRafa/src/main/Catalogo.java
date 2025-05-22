@@ -50,19 +50,21 @@ public class Catalogo {
      */
     private static void listarProductosPorCategoria(Scanner sn) {
         System.out.println("\n=== Listar productos por categoria ===");
-        List<Categoria> categorias = CategoriaDao.mostrarCategorias();
+
+        List<Categoria> categorias = CategoriaDao.mostrarCategorias(); // Lista de categorias
         List<Integer> ids = new ArrayList<>();
-        for (Categoria c : categorias) ids.add(c.getId());
+        for (Categoria c : categorias) ids.add(c.getId()); // Guarda los IDs
 
         System.out.println("Categorias:");
         categorias.forEach(System.out::println);
 
         int op = Funciones.dimeEntero("Inserte id categoria", sn);
-        while (!ids.contains(op)) {
+        while (!ids.contains(op)) { // Revisar si esta en la lista
             System.err.println("ID no encontrado");
             op = Funciones.dimeEntero("Inserte id categoria", sn);
         }
 
+        // Muestra los productos de esa categoria
         String filter = "where idCategoria = " + op;
         List<Producto> productos = ProductoDao.mostrarProductos(filter);
         System.out.println("Productos de esa categoria:");
