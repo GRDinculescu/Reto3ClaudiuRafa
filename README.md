@@ -1,4 +1,5 @@
 # Reto 3
+# Reto de clase / Class challenge
 ## De Claudiu y Rafa
 - Rafa crea el Repo
 - Claudiu se une a la partida
